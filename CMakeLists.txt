@@ -29,7 +29,7 @@ target_include_directories(
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 )
 
-target_compile_features(expected64_expected64 INTERFACE cxx_std_17)
+target_compile_features(expected64_expected64 INTERFACE cxx_std_23)
 
 # ---- Install rules ----
 

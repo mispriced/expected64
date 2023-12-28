@@ -1,0 +1,50 @@
+name: Benchmarks
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  performance:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      matrix:
+        compiler: [gcc-11, gcc-12, gcc-13, clang-16, clang-17]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Make install script executable
+        run: chmod +x scripts/install_compiler.sh
+
+      - name: Install compiler
+        run: bash scripts/install_compiler.sh ${{ matrix.compiler }}
+        env:
+          compiler: ${{ matrix.compiler }}
+
+      - uses: actions/setup-python@v4
+        with: { python-version: "3.8" }
+
+      - name: Build and Configure
+        run: bash scripts/build-clean.sh performance-ubuntu
+
+      - name: Test
+        working-directory: build
+        run: ctest --output-on-failure --no-tests=error
+
+      - name: Performance
+        run: |
+          ./build/benchmark/expected64_benchmark > out.txt
+          python3 scripts/parse_catch2_benchmark.py out.txt > benchmark_results_${{ matrix.compiler }}.html
+
+      - name: Deploy to GitHub Pages
+        run: |
+          git checkout gh-pages
+          mv benchmark_results_${{ matrix.compiler }}.html ./benchmark_results_${{ matrix.compiler }}.html
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add benchmark_results_${{ matrix.compiler }}.html
+          git commit -m "Update Benchmark Results"
+          git push origin gh-pages

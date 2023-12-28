@@ -1,6 +1,12 @@
 # expected64
 
-This is the expected64 project.
+`expected64` is a tagged union to hold double, int64_t, uint64_t, and (64-bit) pointers.
+
+# Benchmarks
+
+## Latest Bencharks
+
+[Catch2 Bencharks](https://mispriced.github.io/expected64/benchmark_results.html)
 
 # Building and installing
 
@@ -33,4 +39,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-

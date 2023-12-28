@@ -5,7 +5,7 @@ include(cmake/prelude.cmake)
 project(
     expected64
     VERSION 0.1.0
-    DESCRIPTION "Short description"
+    DESCRIPTION "Simple tagged union expected type"
     HOMEPAGE_URL "https://example.com/"
     LANGUAGES NONE
 )
@@ -29,12 +29,21 @@ target_include_directories(
     "$<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>"
 )
 
-target_compile_features(expected64_expected64 INTERFACE cxx_std_23)
+target_compile_features(expected64_expected64 INTERFACE cxx_std_20)
 
 # ---- Install rules ----
 
 if(NOT CMAKE_SKIP_INSTALL_RULES)
   include(cmake/install-rules.cmake)
+endif()
+
+# ---- Benchmarks ----
+
+if(PROJECT_IS_TOP_LEVEL)
+  option(BUILD_BENCHMARKS "Build benchmarks tree." "${expected64_DEVELOPER_MODE}")
+  if(BUILD_BENCHMARKS)
+    add_subdirectory(benchmark)
+  endif()
 endif()
 
 # ---- Developer mode ----

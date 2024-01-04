@@ -1,0 +1,9 @@
+<h2>factorial</h2>
+<table border="1">
+<tr><th>Benchmark Name</th><th>Samples</th><th>Iterations</th><th>Estimated</th><th>Mean</th><th>Low Mean</th><th>High Mean</th><th>Std Dev</th><th>Low Std Dev</th><th>High Std Dev</th></tr>
+<tr><td>Factorial with expected64</td><td>100</td><td>106</td><td>2.915 ms</td><td>274.593 ns</td><td>274.324 ns</td><td>275.31 ns</td><td>1.96558 ns</td><td>0.0497749 ns</td><td>4.1349 ns</td></tr>
+<tr><td>Factorial with std::optional</td><td>100</td><td>105</td><td>2.9085 ms</td><td>276.81 ns</td><td>276.548 ns</td><td>277.6 ns</td><td>2.10915 ns</td><td>0.746174 ns</td><td>4.56308 ns</td></tr>
+<tr><td>Cube with expected64</td><td>100</td><td>117</td><td>2.9133 ms</td><td>251.39 ns</td><td>249.699 ns</td><td>256.431 ns</td><td>13.2553 ns</td><td>3.91962 ns</td><td>28.4628 ns</td></tr>
+<tr><td>Cube with std::optional</td><td>100</td><td>114</td><td>2.907 ms</td><td>256.352 ns</td><td>255.66 ns</td><td>259.46 ns</td><td>6.34492 ns</td><td>0.763694 ns</td><td>14.9838 ns</td></tr>
+</table>
+

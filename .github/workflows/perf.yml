@@ -37,14 +37,41 @@ jobs:
       - name: Performance
         run: |
           ./build/benchmark/expected64_benchmark > out.txt
-          python3 scripts/parse_catch2_benchmark.py out.txt > benchmark_results_${{ matrix.compiler }}.html
+          python3 scripts/parse_catch2_benchmarks.py out.txt > benchmark_results_${{ matrix.compiler }}.html
+
+      - name: Save Benchmark Results as Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: benchmark-results-${{ matrix.compiler }}
+          path: benchmark_results_${{ matrix.compiler }}.html
+  deploy:
+    needs: performance
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Download all Artifacts
+        uses: actions/download-artifact@v2
 
       - name: Deploy to GitHub Pages
         run: |
+          git fetch origin gh-pages:gh-pages
           git checkout gh-pages
-          mv benchmark_results_${{ matrix.compiler }}.html ./benchmark_results_${{ matrix.compiler }}.html
-          git config user.name "GitHub Actions"
-          git config user.email "actions@github.com"
-          git add benchmark_results_${{ matrix.compiler }}.html
-          git commit -m "Update Benchmark Results"
-          git push origin gh-pages
+          git reset --hard origin/gh-pages
+
+          # Add all HTML files to staging, including those in new directories
+          git add -A
+
+          # Check if there are changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update Benchmark Results"
+            git push origin gh-pages
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

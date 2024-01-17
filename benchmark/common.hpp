@@ -1,4 +1,5 @@
 #pragma once
+#include <optional>
 #include <random>  // for std::mt19937 and std::random_device
 #include <vector>
 

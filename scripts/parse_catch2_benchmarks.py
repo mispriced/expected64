@@ -2,9 +2,10 @@ import re
 import sys
 
 def parse_benchmark_output(output):
-    # Regex pattern to capture different parts of the benchmark output
+    # Updated regex pattern to capture different parts of the benchmark output
+    # This pattern may need further refinement based on the actual format of your raw results
     test_pattern = r'-------------------------------------------------------------------------------\n(.*?)\n-------------------------------------------------------------------------------\n(.*?)\n==============================================================================='
-    benchmark_pattern = r'(\w+ with [\w\:\:]+)\s+(\d+)\s+(\d+)\s+([\d\.]+ ms)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)'
+    benchmark_pattern = r'(\w+ with [\w\:\:]+|Factorial with Raw Type|Cube with Raw Type)\s+(\d+)\s+(\d+)\s+([\d\.]+ ms)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)\s+([\d\.]+ ns)'
 
     tests = re.findall(test_pattern, output, re.DOTALL)
     parsed_data = {}
@@ -18,7 +19,6 @@ def parse_benchmark_output(output):
 def generate_html_tables(data):
     html = ''
     for test_name, benchmarks in data.items():
-        html += f'<h2>{test_name}</h2>\n'
         html += '<table border="1">\n'
         html += '<tr><th>Benchmark Name</th><th>Samples</th><th>Iterations</th><th>Estimated</th><th>Mean</th><th>Low Mean</th><th>High Mean</th><th>Std Dev</th><th>Low Std Dev</th><th>High Std Dev</th></tr>\n'
         for benchmark in benchmarks:

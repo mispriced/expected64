@@ -59,11 +59,21 @@ jobs:
 
       - name: Deploy to GitHub Pages
         run: |
-          git fetch origin gh-pages:gh-pages
-          git checkout gh-pages
-          git reset --hard origin/gh-pages
+          # Setup Git
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
 
-          # Add all HTML files to staging, including those in new directories
+          # Clone a fresh copy of the repo in a separate directory
+          git clone https://github.com/${{ github.repository }}.git repo-copy
+          cd repo-copy
+
+          # Checkout gh-pages branch
+          git checkout gh-pages
+
+          # Copy the benchmark results from the previous step
+          cp ../benchmark-results-*/*.html .
+
+          # Add all changes to staging
           git add -A
 
           # Check if there are changes to commit

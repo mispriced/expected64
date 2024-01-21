@@ -9,13 +9,13 @@ int main()
 {
   int y = 0;
 
-  auto positive_five = 5;
-  auto negative_five = -5;
+  int64_t test_value = 5;
 
   auto bench = [&](auto func, const char* description, int num)
   {
     std::ofstream out {std::string(description) + ".json"};
     ankerl::nanobench::Bench()
+        .minEpochIterations(1000000)
         .run(description,
              [&]
              {
@@ -25,10 +25,8 @@ int main()
         .render(ankerl::nanobench::templates::pyperf(), out);
   };
 
-  bench(factorial_raw<double>, "factorial(5)-raw-double", positive_five);
-  bench(factorial_raw<double>, "factorial(-5)-raw-double", negative_five);
-  bench(factorial_optional<double>, "factorial(5)-optional-double", positive_five);
-  bench(factorial_optional<double>, "factorial(-5)-optional-double", negative_five);
-  bench(factorial_expected64<double>, "factorial(5)-expected64-double", positive_five);
-  bench(factorial_expected64<double>, "factorial(-5)-expected64-double", negative_five);
+  bench(factorial_raw<int64_t>, "factorial-raw-int", test_value);
+  bench(factorial_optional<int64_t>, "factorial-optional-int", test_value);
+  bench(factorial_expected<int64_t>, "factorial-tlexpected-int", test_value);
+  bench(factorial_expected64<int64_t>, "factorial-expected64-int", test_value);
 }

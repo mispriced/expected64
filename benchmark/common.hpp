@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <expected64/expected64.hpp>
+#include <tl/expected.hpp>
 
 std::vector<int> gen_shuffled_numbers()
 {
@@ -52,6 +53,14 @@ std::optional<T> factorial_optional(T n)
 {
   if (n < 0)
     return std::nullopt;
+  return factorial(n);
+}
+
+template<typename T>
+tl::expected<T, error_code> factorial_expected(T n)
+{
+  if (n < 0)
+    return tl::unexpected {error_code::error};
   return factorial(n);
 }
 

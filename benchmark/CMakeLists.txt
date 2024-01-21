@@ -12,6 +12,7 @@ add_executable(expected64_benchmark_catch2
 
 target_include_directories(expected64_benchmark_catch2 PRIVATE
         ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/3rdparty
         )
 
 target_link_libraries(expected64_benchmark_catch2
@@ -32,6 +33,7 @@ add_executable(expected64_benchmark_nanobench
 
 target_include_directories(expected64_benchmark_nanobench PRIVATE
         ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/3rdparty
         )
 
 target_link_libraries(expected64_benchmark_nanobench

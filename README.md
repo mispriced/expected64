@@ -42,6 +42,17 @@ Doubles use the bits only **after** the `quiet_NaN()` nan mask to store error in
 - [Clang 16 Results](https://mispriced.github.io/expected64/benchmark-results-clang-16/benchmark_results_clang-16.html)
 - [Clang 17 Results](https://mispriced.github.io/expected64/benchmark-results-clang-17/benchmark_results_clang-17.html)
 
+## Nanobench Results (int64_t)
+
+Ran locally on a i7-14700
+
+| ns/op |           op/s | err% | ins/op | cyc/op |   IPC | bra/op | miss% | total | benchmark                  |
+| ----: | -------------: | ---: | -----: | -----: | ----: | -----: | ----: | ----: | :------------------------- |
+|  2.12 | 471,147,691.07 | 1.6% |  38.00 |   7.19 | 5.287 |  10.25 |  0.0% |  0.03 | `factorial-raw-int`        |
+|  2.94 | 340,087,470.50 | 4.0% |  54.00 |  10.05 | 5.373 |  11.25 |  0.0% |  0.04 | `factorial-optional-int`   |
+|  2.80 | 356,678,076.01 | 2.1% |  53.00 |   9.46 | 5.600 |  11.25 |  0.0% |  0.04 | `factorial-tlexpected-int` |
+|  2.21 | 452,669,048.44 | 1.7% |  40.00 |   7.53 | 5.312 |  11.25 |  0.0% |  0.03 | `factorial-expected64-int` |
+
 # Building and installing
 
 See the [BUILDING](BUILDING.md) document.

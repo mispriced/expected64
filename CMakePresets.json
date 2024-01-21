@@ -130,7 +130,7 @@
       "inherits": ["ci-build", "ci-linux", "dev-mode"]
     },
     {
-      "name": "performance-ubuntu",
+      "name": "performance",
       "hidden": false,
       "inherits": ["ci-ubuntu"],
       "cacheVariables": {
